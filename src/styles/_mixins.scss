@@ -1,0 +1,306 @@
+// ========================================
+// Life Planner - SCSS Миксины
+// Используют CSS переменные (var(--...))
+// ========================================
+
+// ========================================
+// Flexbox shortcuts
+// ========================================
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@mixin flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+// ========================================
+// Glass effect
+// ========================================
+@mixin glass($opacity: 0.05) {
+  background: rgba(255, 255, 255, $opacity);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+// ========================================
+// Gradient text
+// ========================================
+@mixin text-gradient {
+  background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-tertiary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// ========================================
+// Card styles
+// ========================================
+@mixin card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  transition: all var(--transition-normal);
+  
+  &:hover {
+    border-color: var(--color-border-hover);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+// ========================================
+// Button base
+// ========================================
+@mixin btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  
+  &:hover {
+    background: var(--color-bg-hover);
+    border-color: var(--color-border-hover);
+    transform: translateY(-1px);
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+// ========================================
+// Primary button
+// ========================================
+@mixin btn-primary {
+  @include btn-base;
+  background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
+  border: none;
+  box-shadow: var(--shadow-glow);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 40px var(--color-accent-glow);
+  }
+}
+
+// ========================================
+// Input base
+// ========================================
+@mixin input-base {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  color: var(--color-text-primary);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  outline: none;
+  transition: all var(--transition-fast);
+  
+  &:focus {
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 3px var(--color-accent-glow);
+  }
+  
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+}
+
+// ========================================
+// Scrollbar
+// ========================================
+@mixin custom-scrollbar($width: 6px, $track-margin: 4px) {
+  // Firefox
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  
+  // Chrome, Safari, Edge
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    margin: $track-margin 0;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+    transition: background 0.2s ease;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      background-clip: content-box;
+    }
+    
+    &:active {
+      background: var(--color-accent-primary);
+      background-clip: content-box;
+    }
+  }
+  
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+// Тонкий минималистичный скроллбар
+@mixin thin-scrollbar {
+  @include custom-scrollbar(4px, 2px);
+}
+
+// Скроллбар с акцентным цветом
+@mixin accent-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent-primary) transparent;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(99, 102, 241, 0.05);
+    border-radius: 10px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--color-accent-primary), var(--color-accent-secondary));
+    border-radius: 10px;
+    
+    &:hover {
+      background: linear-gradient(180deg, var(--color-accent-secondary), var(--color-accent-tertiary));
+    }
+  }
+}
+
+// ========================================
+// Text utilities
+// ========================================
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin line-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// ========================================
+// Responsive breakpoints
+// ========================================
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+
+@mixin sm {
+  @media (min-width: $breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @media (min-width: $breakpoint-xl) {
+    @content;
+  }
+}
+
+// ========================================
+// Transitions
+// ========================================
+@mixin transition($property: all) {
+  transition: $property var(--transition-normal);
+}
+
+@mixin transition-fast($property: all) {
+  transition: $property var(--transition-fast);
+}
+
+// ========================================
+// Абсолютное позиционирование
+// ========================================
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin absolute-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+// ========================================
+// Визуально скрыть (для accessibility)
+// ========================================
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
